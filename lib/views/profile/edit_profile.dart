@@ -54,7 +54,7 @@ class _EditProfilePageState extends State<EditProfile> {
                 children: [
                   ImageSelect(
                     radius: 80,
-                    file: controller.image.value,
+                    url: supabaseService.currentUser.value?.userMetadata?["image"] ?? 'assets/images/default_profile_pic.png',
                   ),
                   IconButton(
                     onPressed: () {

@@ -89,7 +89,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             ),
                             Obx(() => ImageSelect(
                               radius: 50,
-                              url: supabaseService.currentUser.value!.userMetadata!["image"],
+                              url: supabaseService.currentUser.value?.userMetadata?["image"] ?? 'assets/images/default_profile_pic.png',
                             )),
                           ],
                         )),

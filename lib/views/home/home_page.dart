@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:thread/controllers/home_controller.dart';
 import 'package:thread/widets/loading.dart';
-
 import '../../widets/onepost_card.dart';
 import '../models/post_models.dart';
 
@@ -15,16 +14,14 @@ class HomePage extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+            title:  Image.asset("lib/assets/images/logo.png",width: 40,height: 40,),
+      ),
       backgroundColor: Colors.black,
       body:
         CustomScrollView(
           slivers: [
-            SliverAppBar(
-              title: Padding(padding:const EdgeInsets.only(top: 10),
-              child: Image.asset("lib/assets/images/logo.png",width: 40,height: 40,),
-              ),
-              centerTitle: true,
-            ),
             SliverToBoxAdapter(
               child:
               Obx(()=>
@@ -32,8 +29,10 @@ class HomePage extends StatelessWidget{
               builder(
                 shrinkWrap: true,
                 padding: EdgeInsets.zero,
-                // physics: const BouncingScrollPhysics(),
-                itemBuilder: (context,index)=>PostCard(post: controller.posts[index]),itemCount:controller.posts.length,)),
+                physics: const BouncingScrollPhysics(),
+                itemBuilder: (context,index)=>
+                    PostCard(post: controller.posts[index]),itemCount:controller.posts.length,)
+              ),
             )
           ],
         )
@@ -41,3 +40,4 @@ class HomePage extends StatelessWidget{
     );
   }
 }
+

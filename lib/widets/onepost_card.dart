@@ -1,12 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:thread/views/models/post_models.dart';
-import 'package:thread/widets/post_componets/PostActions.dart';
-import 'package:thread/widets/post_componets/PostContent.dart';
-import 'package:thread/widets/post_componets/PostHeader.dart';
-import 'package:thread/widets/post_componets/UserProfile.dart';
+import 'package:thread/widets/posts/PostActions.dart';
+import 'package:thread/widets/posts/PostContent.dart';
+import 'package:thread/widets/posts/PostHeader.dart';
 
+import '../views/models/post_models.dart';
 
 class PostCard extends StatelessWidget {
   final PostModel post;
@@ -15,33 +13,86 @@ class PostCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
-      child: Column(
+    return
+      Container(
+      margin: EdgeInsets.symmetric(
+          vertical: 10), // Margin for spacing between posts
+      decoration: BoxDecoration(
+        color: Colors.black,
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.3),
+            spreadRadius: 2,
+            blurRadius: 5,
+            offset: Offset(0, 3), // Shadow position
+          ),
+        ],
+      ),
+      child: Stack(
+        alignment: AlignmentDirectional.bottomEnd,
         children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          Column(
             children: [
-              UserProfile(post: post),
-              const SizedBox(width: 10),
-              SizedBox(
-                width: context.width * 0.80,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    PostHeader(post: post),
-                    PostContent(post: post),
-                    PostActions(
-                      post: post, // Pass the post object
-                      likeCount: post.likeCount, // No need for toInt() since it's now non-nullable
-                      commentsCount: post.commentsCount, // No need for toInt() since it's now non-nullable
-                    ),
-                  ],
-                ),
-              ),
+              HeaderPost(post: post),
+              ContentPost(post: post),
+              ActionsPost(post: post),
             ],
           ),
-          const Divider(color: Color(0xff242424)),
+          Positioned(
+            left: 35,
+            top: 70, // Adjust top as needed
+            bottom: 40, // Extend to bottom of content area
+            child: Container(
+              width: 3,
+              height: 100, // Adjust height for divider
+              decoration: BoxDecoration(
+                color: Colors.grey.shade800,
+                borderRadius:
+                    BorderRadius.circular(12), // Set your desired radius here
+              ),
+            ),
+          ),
+          Positioned(
+            right: 330,
+            child: Container(
+              height: 35,
+              width: 35,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(1),
+              ),
+              child: Stack(
+                children: [
+                  const Positioned(
+                    right: 0,
+                    child: CircleAvatar(
+                      backgroundImage:
+                          AssetImage('lib/assets/images/avatar.png'),
+                      radius: 9,
+                    ),
+                  ),
+                  const Positioned(
+                    left: 0,
+                    top: 10,
+                    child: CircleAvatar(
+                      backgroundImage:
+                          AssetImage('lib/assets/images/avatar.png'),
+                      radius: 7,
+                    ),
+                  ),
+                  const Positioned(
+                    right: 8,
+                    bottom: 0,
+                    child: CircleAvatar(
+                      backgroundImage:
+                          AssetImage('lib/assets/images/avatar.png'),
+                      radius: 6,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );
