@@ -4,7 +4,11 @@ import 'package:get/get.dart';
 import 'package:thread/controllers/profile_controller.dart';
 import 'package:thread/routes/routes_names.dart';
 import 'package:thread/services/supabase_service.dart';
+import 'package:thread/widets/comment_card.dart';
 import 'package:thread/widets/image_select.dart';
+import 'package:thread/widets/loading.dart';
+
+import '../../widets/onepost_card.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -17,6 +21,14 @@ class _ProfilePageState extends State<ProfilePage> {
   final SupabaseService supabaseService = Get.find<SupabaseService>();
   final ProfileController controller = Get.put(ProfileController());
 
+  @override
+  void initState() {
+    if(supabaseService.currentUser.value?.id!=null){
+      controller.fetchRepliyes(supabaseService.currentUser.value!.id);
+      controller.fetchUserThreads(supabaseService.currentUser.value!.id);
+    }
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +48,8 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
         ],
       ),
-      body: DefaultTabController(
+      body:
+      DefaultTabController(
         length: 2,
         child: NestedScrollView(
           headerSliverBuilder: (context, innerBoxIsScrolled) {
@@ -138,12 +151,57 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ];
           },
-          body: const TabBarView(
+          body:
+          TabBarView(
             children: [
-              Center(child: Text('Threads Section')), // Replace with actual threads widget
-              Center(child: Text('Replies Section')), // Replace with actual replies widget
+              Obx(() => SingleChildScrollView(
+                child: Column(
+                  children: [
+                    const SizedBox(height: 10),
+                    if (controller.postloading.value)
+                      const Loading()
+                    else if (controller.posts.isNotEmpty)
+                      ListView.builder(
+                        shrinkWrap: true,
+                        physics: const BouncingScrollPhysics(),
+                        itemCount: controller.posts.length,
+                        itemBuilder: (context, index) => PostCard(
+                          post: controller.posts[index],
+                        ),
+                      )
+                    else
+                      const Center(
+                        child: Text("No Post found"),
+                      )
+                  ],
+                ),
+              )),
+              Obx(() => SingleChildScrollView(
+                child: Column(
+                  children: [
+                    const SizedBox(height: 10),
+                    if (controller.repliesloading.value)
+                      const Loading()
+                    else if (controller.reply.isNotEmpty)
+                      ListView.builder(
+                        shrinkWrap: true,
+                        physics: const BouncingScrollPhysics(),
+                        itemCount: controller.reply.length,
+                        itemBuilder: (context, index) {
+                          final replyItem = controller.reply[index];
+                          return CommentCard(reply: replyItem);
+                        },
+                      )
+                    else
+                      const Center(
+                        child: Text("No reply found!"),
+                      ),
+                  ],
+                ),
+              )),
             ],
           ),
+
         ),
       ),
     );

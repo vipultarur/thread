@@ -20,21 +20,25 @@ class HomePage extends StatelessWidget{
       ),
       backgroundColor: Colors.black,
       body:
-        CustomScrollView(
-          slivers: [
-            SliverToBoxAdapter(
-              child:
-              Obx(()=>
-              controller.loading.value?const Loading():ListView.
-              builder(
-                shrinkWrap: true,
-                padding: EdgeInsets.zero,
-                physics: const BouncingScrollPhysics(),
-                itemBuilder: (context,index)=>
-                    PostCard(post: controller.posts[index]),itemCount:controller.posts.length,)
-              ),
-            )
-          ],
+        RefreshIndicator(
+          
+          onRefresh: ()=>controller.fetchThreads(),
+          child: CustomScrollView(
+            slivers: [
+              SliverToBoxAdapter(
+                child:
+                Obx(()=>
+                controller.loading.value?const Loading():ListView.
+                builder(
+                  shrinkWrap: true,
+                  padding: EdgeInsets.zero,
+                  physics: const BouncingScrollPhysics(),
+                  itemBuilder: (context,index)=>
+                      PostCard(post: controller.posts[index]),itemCount:controller.posts.length,)
+                ),
+              )
+            ],
+          ),
         )
       ,
     );

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:thread/controllers/profile_controller.dart';
 import 'package:thread/controllers/setting_controller.dart';
 import 'package:thread/utils/helper.dart';
+import 'package:thread/widets/image_select.dart';
 
 class Setting extends StatelessWidget {
   Setting({super.key});
@@ -28,46 +29,7 @@ class Setting extends StatelessWidget {
             ),
             secondary: Icon(Icons.notifications, color: Colors.white),
           ),
-          ListTile(
-            title: Text(
-              "Dark Mode",
-              style: TextStyle(color: Colors.white),
-            ),
-            leading: Icon(Icons.dark_mode, color: Colors.white),
-            onTap: () {},
-          ),
-          ListTile(
-            title: Text(
-              "Rate App",
-              style: TextStyle(color: Colors.white),
-            ),
-            leading: Icon(Icons.star, color: Colors.white),
-            onTap: () {},
-          ),
-          ListTile(
-            title: Text(
-              "Share App",
-              style: TextStyle(color: Colors.white),
-            ),
-            leading: Icon(Icons.share, color: Colors.white),
-            onTap: () {},
-          ),
-          ListTile(
-            title: Text(
-              "Privacy Policy",
-              style: TextStyle(color: Colors.white),
-            ),
-            leading: Icon(Icons.lock, color: Colors.white),
-            onTap: () {},
-          ),
-          ListTile(
-            title: Text(
-              "Terms and Conditions",
-              style: TextStyle(color: Colors.white),
-            ),
-            leading: Icon(Icons.description, color: Colors.white),
-            onTap: () {},
-          ),
+
           ListTile(
             title: Text(
               "Cookies Policy",
@@ -103,6 +65,21 @@ class Setting extends StatelessWidget {
               confirmDialog("are you sure ?","You want to logout!",settingController.logout);
             },
           ),
+          ListTile(
+            title: Row(
+              children: [
+                CircleAvatar(
+                  radius: 25, // Set the radius to 15
+                  backgroundImage: AssetImage('lib/assets/images/1717471597286.jpg'), // Load image
+                ),
+                SizedBox(width: 10,),
+                Text(
+                 "Developed By Vipul Tarur",
+                  style: TextStyle(color: Colors.white),
+                ),
+              ],
+            ),
+          )
         ],
       ),
     );

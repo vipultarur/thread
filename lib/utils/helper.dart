@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 
 import '../widets/confirm_dilog.dart';
@@ -68,4 +69,26 @@ String getbukket1url(String path){
 //conform dilog
 void confirmDialog(String title,String text,VoidCallback callback){
   Get.dialog(ConfirmDialog(title: title,text: text, callback: callback,));
+}
+
+String formatDate(String? dateStr) {
+  if (dateStr == null || dateStr.isEmpty) {
+    return 'No Date';
+  }
+  try {
+    DateTime dateTime = DateTime.parse(dateStr);
+    return DateFormat('yMMMd').format(dateTime);
+  } catch (e) {
+    return 'Invalid Date';
+  }
+
+}
+void confirmBox(String title, String text, VoidCallback callback) {
+  Get.dialog(
+    ConfirmDialog(
+      title: title,
+      text: text,
+      callback: callback,
+    ),
+  );
 }

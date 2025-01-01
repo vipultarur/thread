@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:thread/utils/helper.dart';
 
@@ -22,16 +21,19 @@ class ImageSelect extends StatelessWidget {
         backgroundImage: FileImage(file!),
         radius: radius,
       );
-
-    } else if (url != null) {
+    } else if (url != null && url!.isNotEmpty) {
       return CircleAvatar(
-        backgroundImage: NetworkImage(getbukket1url(url!)),
         radius: radius,
+        backgroundImage: NetworkImage(getbukket1url(url!)),
+        backgroundColor: Colors.grey[200],
+        onBackgroundImageError: (_, __) {
+          // Handle network image loading error
+        },
       );
     } else {
       return CircleAvatar(
         radius: radius,
-        backgroundImage: const AssetImage("lib/assets/images/avatar.png"),
+        backgroundImage: const AssetImage("assets/images/avatar.png"),
         backgroundColor: Colors.grey[200],
       );
     }

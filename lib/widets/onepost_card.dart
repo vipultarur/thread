@@ -1,15 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:thread/widets/posts/PostActions.dart';
 import 'package:thread/widets/posts/PostContent.dart';
 import 'package:thread/widets/posts/PostHeader.dart';
 
+import '../controllers/reply_controller.dart';
 import '../views/models/post_models.dart';
 
 class PostCard extends StatelessWidget {
   final PostModel post;
 
-  const PostCard({required this.post, super.key});
+   PostCard({required this.post, super.key});
+  final ReplyController controller = Get.put(ReplyController());
 
   @override
   Widget build(BuildContext context) {
